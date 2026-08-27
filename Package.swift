@@ -16,28 +16,28 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-primitives/swift-binary-primitives.git",
+            url: "https://github.com/swift-molecules/swift-binary.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-binary-serializer-primitives.git",
+            url: "https://github.com/swift-molecules/swift-binary-serializer.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-path-primitives.git",
+            url: "https://github.com/swift-molecules/swift-path.git",
             branch: "main"
         ),
-        .package(url: "https://github.com/swift-foundations/swift-kernel.git", branch: "main"),
+        .package(url: "https://github.com/swift-compositions/swift-kernel.git", branch: "main"),
     ],
     targets: [
         .target(
             name: "Paths",
             dependencies: [
-                .product(name: "Path Primitives", package: "swift-path-primitives"),
-                .product(name: "Binary Primitives", package: "swift-binary-primitives"),
+                .product(name: "Path", package: "swift-path"),
+                .product(name: "Binary", package: "swift-binary"),
                 .product(
-                    name: "Binary Serializable Primitives",
-                    package: "swift-binary-serializer-primitives"
+                    name: "Binary Serializable",
+                    package: "swift-binary-serializer"
                 ),
             ]
         ),

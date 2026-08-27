@@ -13,7 +13,7 @@ Owned, validated, platform-native filesystem paths with component iteration, nav
 - **Lazy component views** — `path.components` is a `BidirectionalCollection` that materializes each `Path.Component` on demand by scanning bytes, so `.first`, `.last`, and iteration avoid building an intermediate array.
 - **Path navigation** — `parent`, `appending(_:)`, `relative(to:)`, `hasPrefix(_:)`, and the `/` operator compose paths and components.
 - **Filename introspection** — `stem` and `extension` on both `Path` and `Path.Component`, with a settable `Path.extension` and validated `Stem` / `Extension` types.
-- **Borrowed syscall interop** — `view` and `kernelPath` expose `~Escapable` borrowed views that bridge to `Path_Primitives.Path.Borrowed` without copying on POSIX; `bytes` and `content` give safe `Span<Path.Char>` access.
+- **Borrowed syscall interop** — `view` and `kernelPath` expose `~Escapable` borrowed views that bridge to `Path.Path.Borrowed` without copying on POSIX; `bytes` and `content` give safe `Span<Path.Char>` access.
 - **Binary serialization** — `Path` conforms to `Binary.Serializable`, emitting UTF-8 bytes for cross-platform storage regardless of the native encoding.
 - **String-literal ergonomics** — `Path`, `Path.Component`, `Stem`, and `Extension` are all `ExpressibleByStringLiteral` for construction from literals.
 
@@ -50,7 +50,7 @@ print(file.parent?.string)      // Optional("/Users/coen/Documents")
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-foundations/swift-paths.git", branch: "main")
+    .package(url: "https://github.com/swift-compositions/swift-paths.git", branch: "main")
 ]
 ```
 

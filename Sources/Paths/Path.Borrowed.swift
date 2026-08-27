@@ -1,4 +1,4 @@
-public import Path_Primitives
+public import Path
 
 extension Path {
 
@@ -73,9 +73,9 @@ extension Path {
 extension Path.Borrowed {
 
     @inlinable
-    public var kernelPath: Path_Primitives.Path.Borrowed {
+    public var kernelPath: Path.Path.Borrowed {
         @_lifetime(copy self) borrowing get {
-            let kv = unsafe Path_Primitives.Path.Borrowed(self.pointer, count: self.length)
+            let kv = unsafe Path.Path.Borrowed(self.pointer, count: self.length)
             return unsafe _overrideLifetime(kv, copying: self)
         }
     }
