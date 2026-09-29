@@ -16,15 +16,10 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-molecules/swift-binary.git",
-            branch: "main"
-        ),
+            url: "https://github.com/swift-atoms/swift-binary.git",
+            branch: "main", traits: ["Serializer"]),
         .package(
-            url: "https://github.com/swift-molecules/swift-binary-serializer.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-molecules/swift-path.git",
+            url: "https://github.com/swift-atoms/swift-path.git",
             branch: "main"
         ),
         .package(url: "https://github.com/swift-compositions/swift-kernel.git", branch: "main"),
@@ -35,10 +30,6 @@ let package = Package(
             dependencies: [
                 .product(name: "Path", package: "swift-path"),
                 .product(name: "Binary", package: "swift-binary"),
-                .product(
-                    name: "Binary Serializable",
-                    package: "swift-binary-serializer"
-                ),
             ]
         ),
         .testTarget(

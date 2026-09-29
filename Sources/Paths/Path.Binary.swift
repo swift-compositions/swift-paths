@@ -1,5 +1,4 @@
 public import Binary
-public import Binary_Serializable
 
 extension Path: Binary.Serializable {
 
