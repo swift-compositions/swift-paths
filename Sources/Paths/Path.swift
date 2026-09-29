@@ -43,7 +43,7 @@ public struct Path: Copyable, Sendable, Hashable {
 
 extension Path {
 
-    public typealias Char = Path.Path.Char
+    public typealias Char = Path::Path.Char
 
     #if os(Windows)
         @usableFromInline
@@ -170,10 +170,10 @@ extension Path {
 
     @inlinable
     public func withKernelPath<R, E: Swift.Error>(
-        _ body: (borrowing Path.Path.Borrowed) throws(E) -> R
+        _ body: (borrowing Path::Path.Borrowed) throws(E) -> R
     ) throws(E) -> R {
         try _storage.buffer.withUnsafeBufferPointer { ptr throws(E) in
-            let view = unsafe Path.Path.Borrowed(
+            let view = unsafe Path::Path.Borrowed(
                 ptr.baseAddress!,
                 count: _storage.buffer.count - 1
             )
