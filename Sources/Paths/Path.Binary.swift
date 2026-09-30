@@ -8,7 +8,7 @@ extension Path: Binary.Serializable {
         into buffer: inout Buffer
     ) where Buffer.Element == Byte {
 
-        buffer.append(contentsOf: path.string.utf8)
+        buffer.append(contentsOf: path.string.utf8.map(Byte.init(bitPattern:)))
     }
 }
 
@@ -19,6 +19,6 @@ extension Path.Component: Binary.Serializable {
         _ component: Self,
         into buffer: inout Buffer
     ) where Buffer.Element == Byte {
-        buffer.append(contentsOf: component.string.utf8)
+        buffer.append(contentsOf: component.string.utf8.map(Byte.init(bitPattern:)))
     }
 }
