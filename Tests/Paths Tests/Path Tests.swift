@@ -9,13 +9,13 @@ extension Path {
         @Test
         func `Valid absolute path initialization`() throws {
             let path = try Path("/Users/coen/Documents")
-            #expect(path.string == "/Users/coen/Documents")
+            #expect(path.string == Path.Fixture.native("/Users/coen/Documents"))
         }
 
         @Test
         func `Valid relative path initialization`() throws {
             let path = try Path("foo/bar/baz")
-            #expect(path.string == "foo/bar/baz")
+            #expect(path.string == Path.Fixture.native("foo/bar/baz"))
         }
 
         @Test
@@ -27,7 +27,7 @@ extension Path {
         @Test
         func `Root path`() throws {
             let path = try Path("/")
-            #expect(path.string == "/")
+            #expect(path.string == Path.Fixture.native("/"))
             #if os(Windows)
                 #expect(path.isAbsolute == false)
             #else
@@ -38,7 +38,7 @@ extension Path {
         @Test
         func `Parent of nested path`() throws {
             let path = try Path("/usr/local/bin")
-            #expect(path.parent?.string == "/usr/local")
+            #expect(path.parent?.string == Path.Fixture.native("/usr/local"))
         }
 
         @Test
@@ -126,9 +126,8 @@ extension Path {
         @Test
         func `Slash operator with string`() throws {
             let path = try Path("/usr")
-            let sep = Path.Fixture.separator
             let newPath = path / "local" / "bin"
-            #expect(newPath.string == "/usr\(sep)local\(sep)bin")
+            #expect(newPath.string == Path.Fixture.native("/usr/local/bin"))
         }
 
         @Test
@@ -136,15 +135,14 @@ extension Path {
             let path = try Path("/usr")
             let component = try Path.Component("local")
             let newPath = path / component
-            #expect(newPath.string == "/usr\(Path.Fixture.separator)local")
+            #expect(newPath.string == Path.Fixture.native("/usr/local"))
         }
 
         @Test
         func `Slash operator with chained components`() throws {
             let dir = try Path("/Users/coen")
-            let sep = Path.Fixture.separator
             let nested = dir / "Documents" / "Projects" / "readme.txt"
-            #expect(nested.string == "/Users/coen\(sep)Documents\(sep)Projects\(sep)readme.txt")
+            #expect(nested.string == Path.Fixture.native("/Users/coen/Documents/Projects/readme.txt"))
         }
 
         @Test
@@ -152,9 +150,8 @@ extension Path {
             let dir = try Path("/Users/coen")
             let rel = try Path("Documents/Projects/readme.txt")
             let nested = dir / rel
-            let sep = Path.Fixture.separator
 
-            #expect(nested.string == "/Users/coen\(sep)Documents/Projects/readme.txt")
+            #expect(nested.string == Path.Fixture.native("/Users/coen/Documents/Projects/readme.txt"))
         }
 
         @Test
@@ -238,7 +235,7 @@ extension Path {
         @Test
         func `ExpressibleByStringLiteral`() {
             let path: Path = "/usr/local/bin"
-            #expect(path.string == "/usr/local/bin")
+            #expect(path.string == Path.Fixture.native("/usr/local/bin"))
         }
 
         @Test
@@ -287,7 +284,7 @@ extension Path {
         @Test
         func `String conversion`() throws {
             let path = try Path("/usr/local/bin")
-            #expect(String(path) == "/usr/local/bin")
+            #expect(String(path) == Path.Fixture.native("/usr/local/bin"))
         }
     }
 }
@@ -478,7 +475,7 @@ extension Path.Component {
             let path = try Path("/usr/local")
             let component = try Path.Component("bin")
             let newPath = path / component
-            #expect(newPath.string == "/usr/local\(Path.Fixture.separator)bin")
+            #expect(newPath.string == Path.Fixture.native("/usr/local/bin"))
         }
     }
 }

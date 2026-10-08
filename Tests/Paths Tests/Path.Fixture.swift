@@ -15,5 +15,9 @@ extension Path {
         #else
             static let root: Swift.String = "/"
         #endif
+
+        static func native(_ path: Swift.String) -> Swift.String {
+            path.split(separator: "/", omittingEmptySubsequences: false).joined(separator: separator)
+        }
     }
 }
