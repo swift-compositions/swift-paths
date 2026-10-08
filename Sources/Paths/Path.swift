@@ -28,7 +28,11 @@ public struct Path: Copyable, Sendable, Hashable {
             if byte < 0x20 || byte == 0x7F {
                 throw .containsControlCharacters
             }
-            buffer.append(byte)
+            #if os(Windows)
+                buffer.append(byte == Self.altSeparator ? Self.separator : byte)
+            #else
+                buffer.append(byte)
+            #endif
         }
 
         buffer.append(0)
@@ -85,7 +89,7 @@ extension Path {
                     if unit < 0x20 || unit == 0x7F {
                         throw Path.Error.containsControlCharacters
                     }
-                    buffer.append(unit)
+                    buffer.append(unit == Path.altSeparator ? Path.separator : unit)
                 }
                 buffer.append(0)
                 self.buffer = buffer
