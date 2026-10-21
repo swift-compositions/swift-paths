@@ -17,7 +17,9 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/swift-atoms/swift-binary.git",
-            branch: "main", traits: ["Serializer"]),
+            branch: "main",
+            traits: ["Serializer"]
+        ),
         .package(
             url: "https://github.com/swift-atoms/swift-path.git",
             branch: "main"

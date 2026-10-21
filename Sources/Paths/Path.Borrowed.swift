@@ -64,7 +64,10 @@ extension Path {
         _ body: (borrowing Borrowed) throws(E) -> R
     ) throws(E) -> R {
         try _storage.buffer.withUnsafeBufferPointer { ptr throws(E) in
-            let view = unsafe Borrowed(ptr.baseAddress!)
+            guard let base = unsafe ptr.baseAddress else {
+                preconditionFailure("path storage always holds at least the NUL terminator")
+            }
+            let view = unsafe Borrowed(base)
             return try body(view)
         }
     }

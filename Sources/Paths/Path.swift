@@ -165,7 +165,10 @@ extension Path {
         _ body: (UnsafePointer<Char>) throws(E) -> R
     ) throws(E) -> R {
         try _storage.buffer.withUnsafeBufferPointer { ptr throws(E) in
-            try unsafe body(ptr.baseAddress!)
+            guard let base = unsafe ptr.baseAddress else {
+                preconditionFailure("path storage always holds at least the NUL terminator")
+            }
+            return try unsafe body(base)
         }
     }
 }
@@ -177,8 +180,11 @@ extension Path {
         _ body: (borrowing Path::Path.Borrowed) throws(E) -> R
     ) throws(E) -> R {
         try _storage.buffer.withUnsafeBufferPointer { ptr throws(E) in
+            guard let base = unsafe ptr.baseAddress else {
+                preconditionFailure("path storage always holds at least the NUL terminator")
+            }
             let view = unsafe Path::Path.Borrowed(
-                ptr.baseAddress!,
+                base,
                 count: _storage.buffer.count - 1
             )
             return try body(view)
