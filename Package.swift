@@ -12,7 +12,8 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-        .library(name: "Paths", targets: ["Paths"])
+        .library(name: "Paths", targets: ["Paths"]),
+        .library(name: "Paths Foundation Integration", targets: ["Paths Foundation Integration"]),
     ],
     dependencies: [
         .package(
@@ -33,6 +34,14 @@ let package = Package(
                 .product(name: "Path", package: "swift-path"),
                 .product(name: "Binary", package: "swift-binary"),
             ]
+        ),
+        .target(
+            name: "Paths Foundation Integration",
+            dependencies: ["Paths"]
+        ),
+        .testTarget(
+            name: "Paths Foundation Integration Tests",
+            dependencies: ["Paths Foundation Integration"]
         ),
         .testTarget(
             name: "Paths Tests",
