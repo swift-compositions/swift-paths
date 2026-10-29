@@ -6,24 +6,36 @@ extension Paths.Path {
     @Suite struct `Foundation URL` {
         @Suite struct Unit {}
         @Suite struct `Edge Case` {}
+
+        #if os(Windows)
+            static let file = #"C:\Users\a\Letters\Rekening maart.pdf"#
+            static let folder = #"C:\Users\a\Letters"#
+            static let root = #"C:\"#
+        #else
+            static let file = "/Users/a/Letters/Rekening maart.pdf"
+            static let folder = "/Users/a/Letters"
+            static let root = "/"
+        #endif
     }
 }
 
 extension Paths.Path.`Foundation URL`.Unit {
     @Test func `a file URL becomes its path and back`() throws {
-        let url = URL(filePath: "/Users/a/Letters/Rekening maart.pdf")
+        let url = URL(filePath: Paths.Path.`Foundation URL`.file)
         let path = try Paths.Path(url)
-        #expect(path.string == "/Users/a/Letters/Rekening maart.pdf")
+        #expect(path.string == Paths.Path.`Foundation URL`.file)
         #expect(URL(path) == url)
     }
 }
 
 extension Paths.Path.`Foundation URL`.`Edge Case` {
     @Test func `a folder URL's trailing separator is dropped`() throws {
-        #expect(try Paths.Path(URL(filePath: "/Users/a/Letters/", directoryHint: .isDirectory)).string == "/Users/a/Letters")
+        let url = URL(filePath: Paths.Path.`Foundation URL`.folder, directoryHint: .isDirectory)
+        #expect(try Paths.Path(url).string == Paths.Path.`Foundation URL`.folder)
     }
 
     @Test func `the root stays the root`() throws {
-        #expect(try Paths.Path(URL(filePath: "/", directoryHint: .isDirectory)).string == "/")
+        let url = URL(filePath: Paths.Path.`Foundation URL`.root, directoryHint: .isDirectory)
+        #expect(try Paths.Path(url).string == Paths.Path.`Foundation URL`.root)
     }
 }
